@@ -1,23 +1,38 @@
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: apiapp
+  name: flask-deployment
   labels:
-    app: api
+    app: flask-app
 spec:
-  containers:
-  - name: api-container
-    image: rubinder/api:latest
+  replicas: 2
+  selector:
+    matchLabels:
+      container: flask-container
+  strategy:
+    rollingUpdate:
+      maxSurge: 10%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        container: flask-container
+    spec:
+      containers:
+      - name: flask
+        image: rubinder/flask-lbg-demo:latest
+        ports:
+        - containerPort: 8080
 ---
-apiVersion: v1
 kind: Service
+apiVersion: v1
 metadata:
-  name: apiapp-service
+  name: flask-service
 spec:
   type: LoadBalancer
   selector:
-    app: api
+    app: flask-app
   ports:
   - protocol: TCP
-    port: 80 
-    targetPort: 8080
+    port: 8080 
+    targetPort: 8080  
