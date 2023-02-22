@@ -1,10 +1,10 @@
-apiVersion: v1
-kind: Pod
-metadata:
-  name: api-base
-  labels:
-    app: api-base
-spec:
-  containers:
-  - name: api-base-container
-    image: rubinder/api-base:latest
+# apiVersion: v1
+# kind: Pod
+# metadata:
+#   name: api-base
+#   labels:
+#     app: api-base
+# spec:
+#   containers:
+#   - name: api-base-container
+#     image: rubinder/api-base:latest
